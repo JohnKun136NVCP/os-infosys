@@ -29,13 +29,25 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build with PyInstaller
+      # Linux/macOS build
+      - name: Build with PyInstaller (Unix)
+        if: runner.os != 'Windows'
         run: |
           pyinstaller --onedir --windowed main.py \
             --add-data "README.md:." \
             --add-data "img:img" \
             --add-data "interface:interface" \
             --add-data "src:src"
+
+      # Windows build (usa ; en lugar de :)
+      - name: Build with PyInstaller (Windows)
+        if: runner.os == 'Windows'
+        run: >
+          pyinstaller --onedir --windowed main.py
+          --add-data "README.md;."
+          --add-data "img;img"
+          --add-data "interface;interface"
+          --add-data "src;src"
 
       - name: Test build
         run: echo "✅ Build terminado en ${{ matrix.os }}"
@@ -65,13 +77,25 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build with PyInstaller
+      # Linux/macOS build
+      - name: Build with PyInstaller (Unix)
+        if: runner.os != 'Windows'
         run: |
           pyinstaller --onedir --windowed main.py \
             --add-data "README.md:." \
             --add-data "img:img" \
             --add-data "interface:interface" \
             --add-data "src:src"
+
+      # Windows build
+      - name: Build with PyInstaller (Windows)
+        if: runner.os == 'Windows'
+        run: >
+          pyinstaller --onedir --windowed main.py
+          --add-data "README.md;."
+          --add-data "img;img"
+          --add-data "interface;interface"
+          --add-data "src;src"
 
       # Linux/macOS empaquetado y hash
       - name: Package and Hash (Unix)
