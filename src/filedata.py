@@ -1,4 +1,5 @@
 import os
+import re
 import polars as pl
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -7,10 +8,13 @@ class filedata:
     def __init__(self,data:dict):
         self.data = data
         self.basename = ""
+    def __sanitize_filename(self,name: str) -> str:
+        # Reemplaza caracteres inválidos por guiones bajos
+        return re.sub(r'[<>:"/\\|?*]', '_', name)
     def __basenameData(self,type:str) ->str:
-        fecha = self.data.get("Fecha", "")
-        nombre = self.data.get("Nombre del equipo", "")
-        inventario = self.data.get("Inventario", "")
+        fecha = self.__sanitize_filename(self.data.get("Fecha", ""))
+        nombre = self.__sanitize_filename(self.data.get("Nombre del equipo", ""))
+        inventario = self.__sanitize_filename(self.data.get("Inventario", ""))
         self.basename = f"{nombre}_{inventario}_{fecha}"+f".{type}"
         return self.basename
     def __dataDirExists(self):
