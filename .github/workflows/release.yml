@@ -1,10 +1,3 @@
-name: Build and Release
-
-on:
-  push:
-    tags:
-      - 'v*'   # Se ejecuta al crear un tag tipo v1.0.0
-
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -12,36 +5,40 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    permissions:
+      contents: write
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
+      - run: |
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build with PyInstaller
-        run: |
+      - run: |
           pyinstaller --onedir --windowed main.py \
             --add-data "README.md:." \
             --add-data "img:img" \
             --add-data "interface:interface" \
             --add-data "src:src"
 
-      - name: Package zip
+      # Linux/macOS
+      - name: Package zip (Unix)
+        if: runner.os != 'Windows'
         run: |
           zip -r proyecto-${{ matrix.os }}.zip dist/main
-
-      - name: Generate SHA256
-        shell: bash
-        run: |
           shasum -a 256 proyecto-${{ matrix.os }}.zip > proyecto-${{ matrix.os }}.sha256
+
+      # Windows
+      - name: Package zip (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          powershell Compress-Archive -Path dist\main -DestinationPath proyecto-windows.zip
+          powershell Get-FileHash proyecto-windows.zip -Algorithm SHA256 | Format-List > proyecto-windows.sha256
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v1
