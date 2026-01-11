@@ -2,6 +2,7 @@ import os
 import polars as pl
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from src.utils import resource_path
 class filedata:
     def __init__(self,data:dict):
         self.data = data
@@ -27,9 +28,11 @@ class filedata:
                         f.write(f"  {subclave}: {subvalor}\n")
                 else:
                     f.write(f"{clave}: {valor}\n")
-    def export_html(self,img1="../img/img1.png", img2="../img/img2.png") -> None:
+    def export_html(self,img1="..img/img1.png", img2="..img/img2.png") -> None:
         self.__dataDirExists()
         self.__basenameData('html')
+        img1 = resource_path("img/img1.png")
+        img2 = resource_path("img/img2.png")
         filename = os.path.join("Data", self.basename)
         with open(filename, "w", encoding="utf-8") as f:
             f.write("""

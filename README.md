@@ -38,6 +38,15 @@ Los informes se guardan en la carpeta `Data/`.
 - Nombre: JohnKun136NVCP
 - Versión: 1.0.0
 
+> [!IMPORTANT] 
+> En macOS, es posible que necesites permisos adicionales para acceder a cierta información del sistema. Asegúrate de otorgar los permisos necesarios en las preferencias del sistema. 
+
+Si se bloquea la ejecución de la aplicación, ya que no está firmada por un desarrollador identificado, pero es sin fines de malware, puedes permitir su ejecución manualmente (puedes analizar el código fuente para mayor seguridad):
+
+    - Ve a preferencias del sistema > Seguridad y privacidad > Privacidad >  Ejecutar de todos modos.
+
+Para ejecutar el programa en MacOSX:
+
 
 ## 🖼️ Recursos
 Las imágenes se encuentran en la carpeta `img/`.
