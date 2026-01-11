@@ -46,6 +46,9 @@ Si se bloquea la ejecución de la aplicación, ya que no está firmada por un de
     - Ve a preferencias del sistema > Seguridad y privacidad > Privacidad >  Ejecutar de todos modos.
 
 Para ejecutar el programa en MacOSX:
+```shell
+    ./main
+```
 
 
 ## 🖼️ Recursos
