@@ -101,21 +101,27 @@ jobs:
       - name: Package and Hash (Unix)
         if: runner.os != 'Windows'
         run: |
-          zip -r proyecto-${{ matrix.os }}.zip dist/main
-          shasum -a 256 proyecto-${{ matrix.os }}.zip > proyecto-${{ matrix.os }}.sha256
+          zip -r proyecto-${{ runner.os }}.zip dist/main
+          shasum -a 256 proyecto-${{ runner.os }}.zip > proyecto-${{ runner.os }}.sha256
 
       # Windows empaquetado y hash
       - name: Package and Hash (Windows)
         if: runner.os == 'Windows'
         run: |
-          powershell Compress-Archive -Path dist\main -DestinationPath proyecto-windows.zip
-          powershell Get-FileHash proyecto-windows.zip -Algorithm SHA256 | Format-List > proyecto-windows.sha256
+          powershell Compress-Archive -Path dist\main -DestinationPath proyecto-${{ runner.os }}.zip
+          powershell Get-FileHash proyecto-${{ runner.os }}.zip -Algorithm SHA256 | Format-List > proyecto-${{ runner.os }}.sha256
+
+      # Listar archivos para depuración
+      - name: List files
+        run: |
+          echo "Contenido del workspace:"
+          ls -R || dir
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            proyecto-${{ matrix.os }}.zip
-            proyecto-${{ matrix.os }}.sha256
+            proyecto-${{ runner.os }}.zip
+            proyecto-${{ runner.os }}.sha256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
