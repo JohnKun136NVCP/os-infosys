@@ -1,0 +1,28 @@
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Entorno virtual
+bin/
+.env/
+.venv/
+lib/
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Archivos binarios
+*.exe
+*.app
+*.dll
+*.so
+
+# Archivos temporales
+*.log
+*.tmp
+.spec
+pyvenv.cfg
+ 
