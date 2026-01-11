@@ -1,3 +1,12 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -9,32 +18,36 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - run: |
+      - name: Install dependencies
+        run: |
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - run: |
+      - name: Build with PyInstaller
+        run: |
           pyinstaller --onedir --windowed main.py \
             --add-data "README.md:." \
             --add-data "img:img" \
             --add-data "interface:interface" \
             --add-data "src:src"
 
-      # Linux/macOS
-      - name: Package zip (Unix)
+      # Linux/macOS empaquetado y hash
+      - name: Package and Hash (Unix)
         if: runner.os != 'Windows'
         run: |
           zip -r proyecto-${{ matrix.os }}.zip dist/main
           shasum -a 256 proyecto-${{ matrix.os }}.zip > proyecto-${{ matrix.os }}.sha256
 
-      # Windows
-      - name: Package zip (Windows)
+      # Windows empaquetado y hash
+      - name: Package and Hash (Windows)
         if: runner.os == 'Windows'
         run: |
           powershell Compress-Archive -Path dist\main -DestinationPath proyecto-windows.zip
