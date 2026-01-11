@@ -43,7 +43,7 @@ jobs:
         run: |
           shasum -a 256 proyecto-${{ matrix.os }}.zip > proyecto-${{ matrix.os }}.sha256
 
-      - name: Upload release assets
+      - name: Upload to Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
