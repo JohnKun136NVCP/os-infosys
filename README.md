@@ -36,7 +36,7 @@ Los informes se guardan en la carpeta `Data/`.
 
 ## 👤 Autor
 - Nombre: JohnKun136NVCP
-- Versión: 1.0.0
+- Versión: 1.0.1
 
 > [!IMPORTANT] 
 > En macOS, es posible que necesites permisos adicionales para acceder a cierta información del sistema. Asegúrate de otorgar los permisos necesarios en las preferencias del sistema. 
@@ -73,7 +73,7 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     sha256sum nombre_del_archivo
     ```
 Compara el valor generado con el siguiente checksum proporcionado:
-Linux: `748595836e74cc71e646887a514ce03e7d4331753695e736d0a7c5abdd4b6138`
+Linux: `67f21ab82626b7b69e6f70c41e4691bb48847a54d227d291f92f2c8dd976fc13`
 
 MacOS: `740c433474ae85633b45b5b0af4139248675e579cdc590ddaf78f75b03129580`
 

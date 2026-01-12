@@ -1,16 +1,24 @@
 import os
 import sys
+import shutil
 
-def resource_path(relative_path: str) -> str:
+def resource_path(relative_path: str, export_dir: str = None) -> str:
     """
     Devuelve la ruta absoluta al recurso, compatible con PyInstaller.
-    Cuando se ejecuta empaquetado, los recursos se copian en una carpeta temporal (_MEIPASS).
+    Si se indica export_dir, copia el recurso ahí y devuelve la ruta relativa.
     """
     try:
-        # Cuando se ejecuta con PyInstaller
         base_path = sys._MEIPASS
     except Exception:
-        # Cuando se ejecuta en modo normal (fuentes)
         base_path = os.path.abspath(".")
 
-    return os.path.join(base_path, relative_path)
+    abs_path = os.path.join(base_path, relative_path)
+
+    if export_dir:
+        # Copiar el recurso a la carpeta export_dir
+        os.makedirs(export_dir, exist_ok=True)
+        dest_path = os.path.join(export_dir, os.path.basename(relative_path))
+        shutil.copy(abs_path, dest_path)
+        return os.path.basename(dest_path)  # ruta relativa para HTML
+    else:
+        return abs_path

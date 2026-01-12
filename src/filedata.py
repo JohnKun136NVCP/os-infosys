@@ -35,8 +35,8 @@ class filedata:
     def export_html(self,img1="..img/img1.png", img2="..img/img2.png") -> None:
         self.__dataDirExists()
         self.__basenameData('html')
-        img1 = resource_path("img/img1.png")
-        img2 = resource_path("img/img2.png")
+        img1 = resource_path("img/img1.png", "Data") 
+        img2 = resource_path("img/img2.png", "Data")
         filename = os.path.join("Data", self.basename)
         with open(filename, "w", encoding="utf-8") as f:
             f.write("""
