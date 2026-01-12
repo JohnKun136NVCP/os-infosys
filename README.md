@@ -36,7 +36,7 @@ Los informes se guardan en la carpeta `Data/`.
 
 ## 👤 Autor
 - Nombre: JohnKun136NVCP
-- Versión: 1.0.0
+- Versión: 0.1.0 BETA
 
 > [!IMPORTANT] 
 > En macOS, es posible que necesites permisos adicionales para acceder a cierta información del sistema. Asegúrate de otorgar los permisos necesarios en las preferencias del sistema. 
