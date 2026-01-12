@@ -78,7 +78,7 @@ Linux: `939dacebf457c4ec95a8c9c92cbab61a9e47220db4c7bce3f9a7a20cae2ab578`
 
 MacOS: `95747bbaa016c710aab7fb79c631181a521fed6932c3753df27c6c7bd2ca531f`
 
-Windows: `fe1c26be99216ac6ec6fa05a899d6c5173433aaab4d9c13171a8a6eb01bcc13f`
+Windows: `fa81b5972ffc1b168eb15063e68b7bda588e2faac0aee3d41dd15307838be863`
 
 ## 🖼️ Recursos
 Las imágenes se encuentran en la carpeta `img/`.
