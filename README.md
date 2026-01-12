@@ -73,11 +73,12 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     sha256sum nombre_del_archivo
     ```
 Compara el valor generado con el siguiente checksum proporcionado:
-Linux: `748595836e74cc71e646887a514ce03e7d4331753695e736d0a7c5abdd4b6138`
+
+Linux: `11084633a4ca06cb0910672bc5980d68da43a4bf404268214f2b1ab7c56842c8`
 
 MacOS: `95747bbaa016c710aab7fb79c631181a521fed6932c3753df27c6c7bd2ca531f`
 
-Windows: `5F8CDA2C72BA14268906921D6ED3E2350F26E5AE357915D6DFDFC3C3D03FA88E`
+Windows: `fe1c26be99216ac6ec6fa05a899d6c5173433aaab4d9c13171a8a6eb01bcc13f`
 
 ## 🖼️ Recursos
 Las imágenes se encuentran en la carpeta `img/`.
