@@ -76,7 +76,7 @@ Compara el valor generado con el siguiente checksum proporcionado:
 
 Linux: `67f21ab82626b7b69e6f70c41e4691bb48847a54d227d291f92f2c8dd976fc13`
 
-MacOS: `740c433474ae85633b45b5b0af4139248675e579cdc590ddaf78f75b03129580`
+MacOS: `63ebefd5d1a7f13a9dbba133c872e89a72862aef739f283d9a280ec7adb469cd`
 
 Windows: `4f5dc224ac934b5da9fc0f8a07c3a3f2d99f9ab53fbe2a22be7f3a39bc143014`
 
