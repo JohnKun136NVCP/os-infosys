@@ -1,14 +1,8 @@
 altgraph==0.17.5
-charset-normalizer==3.4.4
 dearpygui==2.1.1
 macholib==1.16.4
 packaging==25.0
-pillow==12.1.0
-polars==1.37.0
-polars-runtime-32==1.37.0
 psutil==7.2.1
 pyinstaller==6.17.0
 pyinstaller-hooks-contrib==2025.11
-reportlab==4.4.7
 setuptools==80.9.0
-xlsxwriter==3.2.9
