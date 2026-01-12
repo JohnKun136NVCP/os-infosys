@@ -74,7 +74,7 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     ```
 Compara el valor generado con el siguiente checksum proporcionado:
 
-Linux: `11084633a4ca06cb0910672bc5980d68da43a4bf404268214f2b1ab7c56842c8`
+Linux: `939dacebf457c4ec95a8c9c92cbab61a9e47220db4c7bce3f9a7a20cae2ab578`
 
 MacOS: `95747bbaa016c710aab7fb79c631181a521fed6932c3753df27c6c7bd2ca531f`
 
