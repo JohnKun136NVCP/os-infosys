@@ -72,13 +72,16 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     ```bash
     sha256sum nombre_del_archivo
     ```
+
+Para esta versión puede revisar el siguiente release, [v0.0.2 alpha](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v0.0.2-alpha)
+
 Compara el valor generado con el siguiente checksum proporcionado:
 
 Linux: `939dacebf457c4ec95a8c9c92cbab61a9e47220db4c7bce3f9a7a20cae2ab578`
 
 MacOS: `d55261340a24741178cf6a966b2e66038a75fa494f09651ffc75c424334ce855`
 
-Windows: `5e8f619040e5bb8a390ffc59920079685c868ea2d768fc258952e8abf138f40a`
+Windows: `961d6785fd095bb34bd5c6bf5787a1fd20ce4497fd4c2ec0909fc1868a744378`
 
 ## 🖼️ Recursos
 Las imágenes se encuentran en la carpeta `img/`.

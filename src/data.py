@@ -27,6 +27,7 @@ class Data:
             for line in result.stdout.splitlines():
                 if "Model name" in line:
                     return line.split(":")[1].strip()
+            # fallback: /proc/cpuinfo
             with open("/proc/cpuinfo") as f:
                 for line in f:
                     if "model name" in line.lower():
@@ -63,16 +64,25 @@ class Data:
 
     def __get_cpu_windows(self):
         try:
+            # Intento con WMIC
             result = subprocess.run(
                 ["wmic", "cpu", "get", "Name"],
                 capture_output=True, text=True
             )
-            lines = result.stdout.splitlines()
+            lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
             if len(lines) > 1:
-                return lines[1].strip()
+                return lines[1]  # Nombre comercial del procesador
             return platform.processor()
         except Exception:
-            return platform.processor()
+            try:
+                # Respaldo con PowerShell si WMIC no está disponible
+                result = subprocess.run(
+                    ["powershell", "-Command", "Get-CimInstance Win32_Processor | Select-Object -ExpandProperty Name"],
+                    capture_output=True, text=True
+                )
+                return result.stdout.strip() or platform.processor()
+            except Exception:
+                return platform.processor()
 
     def get_system_info(self) -> dict:
         hostname = socket.gethostname()
@@ -82,6 +92,8 @@ class Data:
         ram_gb = round(psutil.virtual_memory().total / (1024**3), 2)
 
         system = platform.system()
+        arch = platform.machine()  # arquitectura: x86_64, arm64, etc.
+
         if system == "Linux":
             cpu = self.__get_cpu_linux()
             sistema = self.__get_os_linux()
@@ -91,9 +103,14 @@ class Data:
         elif system == "Windows":
             cpu = self.__get_cpu_windows()
             sistema = f"{platform.system()} {platform.release()}"
-        else:  
+        else:  # Otros
             cpu = platform.processor()
             sistema = f"{platform.system()} {platform.release()}"
+
+        # Agregar arquitectura al procesador
+        if cpu and arch:
+            cpu = f"{cpu} ({arch})"
+
 
         return {
             "Hostname": hostname,
