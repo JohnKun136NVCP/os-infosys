@@ -1,5 +1,5 @@
 import dearpygui.dearpygui as dpg
-from src.data import data
+from src.data import Data
 from src.filedata import filedata
 def extraer_callback(sender, app_data):
     inventario = dpg.get_value("inventario")
@@ -18,7 +18,7 @@ def extraer_callback(sender, app_data):
         dpg.configure_item("error_popup", show=True)
         return
 
-    datos = data(inventario, cubiculo, responsable).generaldata()
+    datos = Data(inventario, cubiculo, responsable).generaldata()
     export = filedata(data=datos)
     for formato in formatos:
 
@@ -35,7 +35,7 @@ def extraer_callback(sender, app_data):
 
 
 def showInterface():
-    datos = data()
+    datos = Data()
     datos = datos.generaldata()
 
     dpg.create_context()
