@@ -52,9 +52,6 @@ Para ejecutar el programa en MacOSX:
 
 ## Descarga  
 
-Puedes descargar la última versión del archivo binario aquí: [extrac-info-sys](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v1.0.1).
-
-
 Para asegurar la integridad del archivo descargado, verifica su checksum SHA-256.
 
 ### Verificación de checksum SHA-256
@@ -73,7 +70,7 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     sha256sum nombre_del_archivo
     ```
 
-Para esta versión (1.0.1) puede seguir el siguiente link: [Version 1.0.1](https://www.baeldung.com/linux/sha-256-checksum)
+Puedes descargar la última versión del archivo binario aquí: [extrac-info-sys](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v1.0.1).
 
 Compara el valor generado con el siguiente checksum proporcionado:
 
