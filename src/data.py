@@ -61,6 +61,19 @@ class Data:
         except Exception:
             return "macOS"
 
+    def __get_cpu_windows(self):
+        try:
+            result = subprocess.run(
+                ["wmic", "cpu", "get", "Name"],
+                capture_output=True, text=True
+            )
+            lines = result.stdout.splitlines()
+            if len(lines) > 1:
+                return lines[1].strip()
+            return platform.processor()
+        except Exception:
+            return platform.processor()
+
     def get_system_info(self) -> dict:
         hostname = socket.gethostname()
         ip = self.__get_ip()
@@ -75,7 +88,10 @@ class Data:
         elif system == "Darwin":  # macOS
             cpu = self.__get_cpu_macos()
             sistema = self.__get_os_macos()
-        else:  # Windows u otros
+        elif system == "Windows":
+            cpu = self.__get_cpu_windows()
+            sistema = f"{platform.system()} {platform.release()}"
+        else:  
             cpu = platform.processor()
             sistema = f"{platform.system()} {platform.release()}"
 
