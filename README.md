@@ -52,7 +52,7 @@ Para ejecutar el programa en MacOSX:
 
 ## Descarga  
 
-Puedes descargar la última versión del archivo binario aquí: [extrac-info-sys](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v1.0.0).
+Puedes descargar la última versión del archivo binario aquí: [extrac-info-sys](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v1.0.1).
 
 
 Para asegurar la integridad del archivo descargado, verifica su checksum SHA-256.
@@ -72,13 +72,16 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     ```bash
     sha256sum nombre_del_archivo
     ```
+
+Para esta versión (1.0.1) puede seguir el siguiente link: [Version 1.0.1](https://www.baeldung.com/linux/sha-256-checksum)
+
 Compara el valor generado con el siguiente checksum proporcionado:
 
 Linux: `67f21ab82626b7b69e6f70c41e4691bb48847a54d227d291f92f2c8dd976fc13`
 
 MacOS: `63ebefd5d1a7f13a9dbba133c872e89a72862aef739f283d9a280ec7adb469cd`
 
-Windows: `4f5dc224ac934b5da9fc0f8a07c3a3f2d99f9ab53fbe2a22be7f3a39bc143014`
+Windows: `e705f478e28fe7a1c9e5b7b5dc1aba4ca0648416954a967c14b810bb244c1b66`
 
 ## 🖼️ Recursos
 Las imágenes se encuentran en la carpeta `img/`.

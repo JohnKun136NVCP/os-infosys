@@ -1,24 +1,35 @@
 import psutil
-import datetime
+import socket
+import uuid
 import platform
-import getpass
 import subprocess
+import datetime
+import getpass
 
-class data:
+class Data:
     def __init__(self, inventario="", cubiculo="", responsable=""):
         self.data = {}
         self.inventario = inventario
         self.cubiculo = cubiculo
-        self.responsable = responsable
+        self.responsable = responsable 
 
-    # --- Métodos auxiliares para CPU y OS ---
+
+    def __get_ip(self):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            ip = s.getsockname()[0]
+            s.close()
+            return ip
+        except Exception:
+            return "No disponible"
+
     def __get_cpu_linux(self):
         try:
             result = subprocess.run(["lscpu"], capture_output=True, text=True)
             for line in result.stdout.splitlines():
                 if "Model name" in line:
                     return line.split(":")[1].strip()
-            # fallback: /proc/cpuinfo
             with open("/proc/cpuinfo") as f:
                 for line in f:
                     if "model name" in line.lower():
@@ -53,18 +64,37 @@ class data:
         except Exception:
             return "macOS"
 
-    # --- Método principal ---
-    def generaldata(self) -> dict:
-        # Datos externos
-        self.data["Inventario"] = self.inventario
-        self.data["Cubículo"] = self.cubiculo
-        self.data["Responsable"] = self.responsable
+    def __get_cpu_windows(self):
+        try:
+            result = subprocess.run(
+                ["wmic", "cpu", "get", "Name"],
+                capture_output=True, text=True
+            )
+            lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+            if len(lines) > 1:
+                return lines[1]
+            return platform.processor()
+        except Exception:
+            try:
+                # Respaldo con PowerShell
+                result = subprocess.run(
+                    ["powershell", "-Command", "Get-CimInstance Win32_Processor | Select-Object -ExpandProperty Name"],
+                    capture_output=True, text=True
+                )
+                return result.stdout.strip() or platform.processor()
+            except Exception:
+                return platform.processor()
 
-        # Datos generales
-        self.data["Fecha"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def get_system_info(self) -> dict:
+        hostname = socket.gethostname()
+        ip = self.__get_ip()
+        mac = ':'.join(['{:02x}'.format((uuid.getnode() >> ele) & 0xff)
+                        for ele in range(0,8*6,8)][::-1])
+        ram_gb = round(psutil.virtual_memory().total / (1024**3), 2)
 
         system = platform.system()
-        arch = platform.machine()  # arquitectura: x86_64, arm64, etc.
+        arch = platform.machine()
 
         if system == "Linux":
             cpu = self.__get_cpu_linux()
@@ -72,25 +102,34 @@ class data:
         elif system == "Darwin":  # macOS
             cpu = self.__get_cpu_macos()
             sistema = self.__get_os_macos()
-        else:  # Windows u otros
+        elif system == "Windows":
+            cpu = self.__get_cpu_windows()
+            sistema = f"{platform.system()} {platform.release()}"
+        else:
             cpu = platform.processor()
             sistema = f"{platform.system()} {platform.release()}"
 
-        # Agregar arquitectura al procesador
         if cpu and arch:
             cpu = f"{cpu} ({arch})"
 
-        self.data["Sistema operativo"] = sistema
-        self.data["Procesador"] = cpu
-        self.data["Nombre del equipo"] = platform.node()
-        self.data["Nombre del usuario"] = getpass.getuser()
 
-        # Hardware
-        self.data["CPU Núcleos"] = psutil.cpu_count(logical=False)
-        self.data["CPU Hilos"] = psutil.cpu_count(logical=True)
-        self.data["Uso CPU(%)"] = psutil.cpu_percent(interval=1)
-        self.data["Memoria total (GB)"] = round(psutil.virtual_memory().total / (1024**3), 2)
+        # --- Información extendida ---
+        info = {
+            "Fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Hostname": hostname,
+            "Nombre del equipo": platform.node(),
+            "Nombre del usuario": getpass.getuser(),
+            "IP": ip,
+            "MACaddress": mac,
+            "RAM": f"{ram_gb} GB",
+            "Procesador": cpu,
+            "Sistema": sistema,
+            "CPU Núcleos": psutil.cpu_count(logical=False),
+            "CPU Hilos": psutil.cpu_count(logical=True),
+            "Uso CPU(%)": psutil.cpu_percent(interval=1),
+        }
 
+        # Discos
         disks = {}
         total_size = 0
         for part in psutil.disk_partitions():
@@ -108,9 +147,9 @@ class data:
             except PermissionError:
                 disks[part.device] = {"Error": "No se pudo acceder"}
         disks["Volumen total (GB)"] = round(total_size / (1024**3), 2)
-        self.data["Discos"] = disks
+        info["Discos"] = disks
 
-        # Red
+        # Interfaces de red
         interfaces = {}
         for iface, addrs in psutil.net_if_addrs().items():
             direcciones = [addr.address for addr in addrs if addr.family.name == "AF_INET"]
@@ -118,6 +157,13 @@ class data:
                 interfaces[iface] = ", ".join(direcciones)
             else:
                 interfaces[iface] = "Sin dirección IP"
-        self.data["Interfaces de red"] = interfaces
+        info["Interfaces de red"] = interfaces
 
+        return info
+
+    def generaldata(self) -> dict:
+        self.data = self.get_system_info()
+        self.data["Inventario"] = self.inventario
+        self.data["Cubículo"] = self.cubiculo
+        self.data["Responsable"] = self.responsable
         return self.data
