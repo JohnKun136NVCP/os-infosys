@@ -36,7 +36,7 @@ Los informes se guardan en la carpeta `Data/`.
 
 ## 👤 Autor
 - Nombre: JohnKun136NVCP
-- Versión: 0.1.0 BETA
+- Versión: 0.1.1 BETA
 
 > [!IMPORTANT] 
 > En macOS, es posible que necesites permisos adicionales para acceder a cierta información del sistema. Asegúrate de otorgar los permisos necesarios en las preferencias del sistema. 
@@ -72,6 +72,9 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     ```bash
     sha256sum nombre_del_archivo
     ```
+
+Para esta versión (v0.1.1 BETA), usa la siguiente liga para descargar el archivo binario correspondiente a tu sistema operativo [extrac-info-sys](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v0.1.1-beta)
+
 Compara el valor generado con el siguiente checksum proporcionado:
 
 Linux: `939dacebf457c4ec95a8c9c92cbab61a9e47220db4c7bce3f9a7a20cae2ab578`

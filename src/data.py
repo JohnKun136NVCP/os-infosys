@@ -62,6 +62,28 @@ class Data:
         except Exception:
             return "macOS"
 
+    def __get_cpu_windows(self):
+        try:
+            # Intento con WMIC
+            result = subprocess.run(
+                ["wmic", "cpu", "get", "Name"],
+                capture_output=True, text=True
+            )
+            lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+            if len(lines) > 1:
+                return lines[1]  # Nombre comercial del procesador
+            return platform.processor()
+        except Exception:
+            try:
+                # Respaldo con PowerShell si WMIC no está disponible
+                result = subprocess.run(
+                    ["powershell", "-Command", "Get-CimInstance Win32_Processor | Select-Object -ExpandProperty Name"],
+                    capture_output=True, text=True
+                )
+                return result.stdout.strip() or platform.processor()
+            except Exception:
+                return platform.processor()
+
     def get_system_info(self) -> dict:
         hostname = socket.gethostname()
         ip = self.__get_ip()
@@ -78,13 +100,17 @@ class Data:
         elif system == "Darwin":  # macOS
             cpu = self.__get_cpu_macos()
             sistema = self.__get_os_macos()
-        else:  # Windows u otros
+        elif system == "Windows":
+            cpu = self.__get_cpu_windows()
+            sistema = f"{platform.system()} {platform.release()}"
+        else:  # Otros
             cpu = platform.processor()
             sistema = f"{platform.system()} {platform.release()}"
 
         # Agregar arquitectura al procesador
         if cpu and arch:
             cpu = f"{cpu} ({arch})"
+
 
         return {
             "Hostname": hostname,
