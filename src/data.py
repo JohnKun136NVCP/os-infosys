@@ -5,11 +5,12 @@ import platform
 import subprocess
 
 class Data:
-    def __init__(self, inventario="", cubiculo="", responsable=""):
+    def __init__(self, inventario="", cubiculo="", responsable="",desktop=""):
         self.data = {}
         self.inventario = inventario
         self.cubiculo = cubiculo
         self.responsable = responsable 
+        self.desktop = desktop
 
     def __get_ip(self):
         try:
@@ -126,4 +127,5 @@ class Data:
         self.data["Inventario"] = self.inventario
         self.data["Cubículo"] = self.cubiculo
         self.data["Responsable"] = self.responsable
+        self.data["Desktop"] = self.desktop
         return self.data

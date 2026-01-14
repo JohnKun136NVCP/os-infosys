@@ -6,8 +6,9 @@ def extraer_callback(sender, app_data):
     inventario = dpg.get_value("inventario") or "N/A"
     cubiculo = dpg.get_value("cubiculo") or "N/A"
     responsable = dpg.get_value("responsable") or "N/A"
+    equipo = dpg.get_value("desktop") or "N/A"
 
-    datos = Data(inventario, cubiculo, responsable).generaldata()
+    datos = Data(inventario, cubiculo, responsable,equipo).generaldata()
     export = filedata(data=datos)
 
     # Exportar siempre a TXT
@@ -36,11 +37,12 @@ def showInterface():
         dpg.add_input_text(label="Inventario", tag="inventario")
         dpg.add_input_text(label="Cubículo", tag="cubiculo")
         dpg.add_input_text(label="Responsable", tag="responsable")
+        dpg.add_input_text(label="Desktop", tag="desktop")
 
         dpg.add_button(label="Extraer", callback=extraer_callback)
 
         with dpg.window(label="Éxito", modal=True, show=False, tag="success_popup"):
-            dpg.add_text("Informe generado correctamente en carpeta Data")
+            dpg.add_text("Informe generado correctamente en el archivo 'inventario.txt'")
 
     dpg.show_viewport()
     dpg.start_dearpygui()

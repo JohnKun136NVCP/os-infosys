@@ -5,7 +5,7 @@ __author__ = "JohnKun136NVCP"
 
 
 if __name__ == "__main__":
-    #try:
-    gui.showInterface()
-    #except:
-    #    print("Un error se produjo en la ejecucion")
+    try:
+        gui.showInterface()
+    except:
+        print("Un error se produjo en la ejecucion")

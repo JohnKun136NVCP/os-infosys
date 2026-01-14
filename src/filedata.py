@@ -5,7 +5,7 @@ class filedata:
         self.data = data
         self.__filename = "inventario.txt"
         self.__header = ("Hostname", "IP", "MACaddress", "RAM", "Procesador", 
-                         "Sistema", "Responsable", "Cubículo", "Inventario")
+                         "Sistema", "Responsable", "Cubículo", "Inventario","Desktop")
         self.__new_file = not os.path.exists(self.__filename)
 
     def export_txt(self) -> None:
