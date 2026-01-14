@@ -1,8 +1,0 @@
-altgraph==0.17.5
-dearpygui==2.1.1
-macholib==1.16.4
-packaging==25.0
-psutil==7.2.1
-pyinstaller==6.17.0
-pyinstaller-hooks-contrib==2025.11
-setuptools==80.9.0

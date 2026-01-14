@@ -1,90 +1,61 @@
-# Inventario de Computadoras
+# Inventario de Computadoras (CLI)
 
 ## 📌 Descripción
-Este programa permite extraer información del sistema (hardware, discos, interfaces de red, etc.) y exportarla en distintos formatos (TXT, HTML, PDF, Excel).
+Este proyecto es una herramienta de línea de comandos desarrollada en C que recopila y muestra información detallada sobre el sistema operativo y el hardware de la computadora en la que se ejecuta. Está diseñado para ser ligero y eficiente, proporcionando datos esenciales sin necesidad de dependencias externas.
+
+## 🛠️ Características 
+- Información del sistema operativo: nombre, versión, arquitectura.
+- Detalles del hardware: CPU, memoria RAM, almacenamiento.
+- Información de red: direcciones IP, estado de las interfaces de red.
+- Salida formateada para fácil lectura en la terminal.
 
 ## 🚀 Uso
-1. Crea un entorno virtual:
-   ```bash
-   python -m venv venv
-   ```
-2. Activa el entorno virtual:
-    - En Windows:
-        ```bash
-        .\venv\Scripts\activate
-        ```
-    - En Linux/macOS:
-        ```bash
-        source venv/bin/activate
-        ```
-3. Instala las dependencias:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4. Ejecuta `main.py` en tu entorno virtual.
-5. Llena los campos de inventario, cubículo y responsable.
-6. Selecciona los formatos de exportación.
-7. Haz clic en **Extraer**.
+Usa el makefile para compilar el proyecto:
 
-## 📦 Exportación
-Los informes se guardan en la carpeta `Data/`.
- 
-## Disponible en
-- Windows
-- Linux
-- macOS
-
-## 👤 Autor
-- Nombre: JohnKun136NVCP
-- Versión: 0.1.0 BETA
-
-> [!IMPORTANT] 
-> En macOS, es posible que necesites permisos adicionales para acceder a cierta información del sistema. Asegúrate de otorgar los permisos necesarios en las preferencias del sistema. 
-
-Si se bloquea la ejecución de la aplicación, ya que no está firmada por un desarrollador identificado, pero es sin fines de malware, puedes permitir su ejecución manualmente (puedes analizar el código fuente para mayor seguridad):
-
-    - Ve a preferencias del sistema > Seguridad y privacidad > Privacidad >  Ejecutar de todos modos.
-
-Para ejecutar el programa en MacOSX:
-```shell
-    ./main
+```bash
+make
 ```
+Luego, ejecuta el programa generado:
 
-## Descarga  
+```bash
+./osinfosys
+```
+Como es cli tiene las siguientes opciones:
+-I Inventario
+-C Cubículo
+-R Responsable
+-D Escritorio/Laptop
 
-Puedes descargar la última versión del archivo binario aquí: [extrac-info-sys](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v1.0.0).
+Ejempllo de uso:
+```bash
+./osinfosys -I "000000" -C "B001"-R "Juan Pérez" -D "Laptop"
+```
+El resultado se guardará en un archivo de texto llamado `inventario.txt` en el mismo directorio donde se ejecuta el programa.
 
 
-Para asegurar la integridad del archivo descargado, verifica su checksum SHA-256.
+## 📂 Estructura del Proyecto
+- `src/`: Contiene los archivos fuente en C.
 
-### Verificación de checksum SHA-256
-Después de descargar el archivo binario, puedes verificar su checksum SHA-256 utilizando el siguiente comando en la terminal:
+## 📄 Archivos Principales
+- `main.c`: Punto de entrada del programa.
+- `src/data.c`: Funciones para recopilar información del sistema.
+- `src/filedata.c`: Funciones para manejar la salida de datos.
+- `makefile`: Script para compilar el proyecto.
 
-- MacOS:
-    ```bash
-    shasum -a 256 nombre_del_archivo
-    ```
-- Windows:
-    ```powershell
-    Get-FileHash nombre_del_archivo -Algorithm SHA256
-    ```
-- Linux:
-    ```bash
-    sha256sum nombre_del_archivo
-    ```
 
-Para esta versión puede revisar el siguiente release, [v0.0.2 alpha](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v0.0.2-alpha)
+## Release
 
-Compara el valor generado con el siguiente checksum proporcionado:
+El realease de este proyecto se encuentra en (osinfosys Releases)[www.github.com/hikomorisaito/os-infosys/releases]
 
-Linux: `939dacebf457c4ec95a8c9c92cbab61a9e47220db4c7bce3f9a7a20cae2ab578`
+## Ejecutable (SHA256)
 
-MacOS: `d55261340a24741178cf6a966b2e66038a75fa494f09651ffc75c424334ce855`
+Linux: ```b1946ac92492d2347c6235b4d2611184f37b5a2b9e6f8b3f8d6f4cf4e5f1e5f7  osinfosys-linux```
 
-Windows: `961d6785fd095bb34bd5c6bf5787a1fd20ce4497fd4c2ec0909fc1868a744378`
+Windows: ```5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8  osinfosys-windows.exe```
 
-## 🖼️ Recursos
-Las imágenes se encuentran en la carpeta `img/`.
+MacOS: ```0929a6e7c21a2e090c0a73623a4818be0a3139c9dd8118c72f8a31275c66a0e2  osinfosys-macos```
 
-## 📄 Licencia
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+
+
+## 📝 Licencia
+Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
