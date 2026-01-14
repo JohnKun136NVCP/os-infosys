@@ -12,7 +12,6 @@ class filedata:
         with open(self.__filename, "a") as f:
             if self.__new_file:
                 f.write("*".join(self.__header) + "\n")
-                f.write("-" * 70 + "\n")  
                 self.__new_file = False
             row = [self.data.get(h, "N/A") for h in self.__header]
             f.write("*".join(row) + "\n")

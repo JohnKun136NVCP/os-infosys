@@ -1,6 +1,6 @@
 from interface import gui
 
-__version__ = "1.0.0"
+__version__ = "v0.0.3 alpha"
 __author__ = "JohnKun136NVCP"
 
 
