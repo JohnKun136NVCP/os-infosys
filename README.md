@@ -45,7 +45,7 @@ El resultado se guardará en un archivo de texto llamado `inventario.txt` en el 
 
 ## Release
 
-El realease de este proyecto se encuentra en (osinfosys Releases)[www.github.com/hikomorisaito/os-infosys/releases]
+El realease de este proyecto se encuentra en [osinfosys Releases](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v0.0.1-alpha-cli)]
 
 ## Ejecutable (SHA256)
 
