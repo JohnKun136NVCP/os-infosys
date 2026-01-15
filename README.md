@@ -36,7 +36,7 @@ Los informes se guardan en la carpeta `Data/`.
 
 ## 👤 Autor
 - Nombre: JohnKun136NVCP
-- Versión: 0.1.0 BETA
+- Versión: 0.0.3 Alpha
 
 > [!IMPORTANT] 
 > En macOS, es posible que necesites permisos adicionales para acceder a cierta información del sistema. Asegúrate de otorgar los permisos necesarios en las preferencias del sistema. 
@@ -73,15 +73,15 @@ Después de descargar el archivo binario, puedes verificar su checksum SHA-256 u
     sha256sum nombre_del_archivo
     ```
 
-Para esta versión puede revisar el siguiente release, [v0.0.2 alpha](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v0.0.2-alpha)
+Para esta versión puede revisar el siguiente release, [v0.0.3 alpha](https://github.com/JohnKun136NVCP/os-infosys/releases/tag/v0.0.3-alpha)
 
 Compara el valor generado con el siguiente checksum proporcionado:
 
-Linux: `939dacebf457c4ec95a8c9c92cbab61a9e47220db4c7bce3f9a7a20cae2ab578`
+Linux: `955db4f75b49153643424f305c7be7a40d5e222685bd9da72c5508c5a7aa72a5`
 
 MacOS: `6855bef9bab4c60261b46a7559743369e18b8de63198159bf431ef0649624373`
 
-Windows: `961d6785fd095bb34bd5c6bf5787a1fd20ce4497fd4c2ec0909fc1868a744378`
+Windows: `05ff6e8d8cd10711277242164c1ca71ab868df368ab4dc22d7f8f08b11ee9b2c`
 
 ## 🖼️ Recursos
 Las imágenes se encuentran en la carpeta `img/`.
