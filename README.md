@@ -53,7 +53,7 @@ Linux: ```9e23fb2848e47c94dd1f2730cabaeaccc2c27ef256643e0cdb8454ef2bd56bc6  osin
 
 Windows: ```5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8  osinfosys-windows.exe```
 
-MacOS: ```0929a6e7c21a2e090c0a73623a4818be0a3139c9dd8118c72f8a31275c66a0e2  osinfosys-macos```
+MacOS: ```a6098d19964149690147e34bcdc58c65eee104c660271e85d32fe90e18fb6844  osinfosys-macos```
 
 
 
