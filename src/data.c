@@ -2,37 +2,54 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+
+#ifdef __linux__
 #include <unistd.h>
 #include <sys/utsname.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-
-#ifdef __linux__
 #include <ifaddrs.h>
-#include <netpacket/packet.h>   // AF_PACKET
+#include <netpacket/packet.h> 
 #endif
 
 #ifdef __APPLE__
+#include <unistd.h>
+#include <sys/utsname.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <ifaddrs.h>
 #include <net/if_dl.h>
 #include <sys/sysctl.h>
 #endif
 
 #ifdef _WIN32
+#include <winsock2.h>
 #include <windows.h>
 #include <iphlpapi.h>
+#pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "iphlpapi.lib")
 #endif
+
+
 
 SystemInfo get_system_info() {
     SystemInfo info;
     memset(&info, 0, sizeof(SystemInfo));
 
-    // Hostname
+#if defined(__linux__) || defined(__APPLE__)
     gethostname(info.hostname, sizeof(info.hostname));
-
-    // --- IP y MAC ---
+#elif defined(_WIN32)
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2,2), &wsaData) == 0) {
+        gethostname(info.hostname, sizeof(info.hostname));
+        WSACleanup();
+    } else {
+        strncpy(info.hostname, "Unknown", sizeof(info.hostname)-1);
+    }
+#endif
 #if defined(__linux__)
     struct ifaddrs *ifaddr, *ifa;
     if (getifaddrs(&ifaddr) == 0) {
@@ -93,7 +110,6 @@ SystemInfo get_system_info() {
     }
 #endif
 
-    // --- RAM total ---
 #if defined(__linux__)
     FILE *meminfo = fopen("/proc/meminfo", "r");
     if (meminfo) {
@@ -153,7 +169,6 @@ SystemInfo get_system_info() {
     }
 #endif
 
-    // --- CPU ---
 #if defined(__linux__)
     FILE *cpuinfo = fopen("/proc/cpuinfo", "r");
     if (cpuinfo) {
@@ -189,7 +204,6 @@ SystemInfo get_system_info() {
     }
 #endif
 
-    // --- Sistema operativo ---
 #if defined(__linux__)
     FILE *osrel = fopen("/etc/os-release", "r");
     if (osrel) {
@@ -223,27 +237,48 @@ SystemInfo get_system_info() {
     }
 
 #elif defined(_WIN32)
-    OSVERSIONINFOEX ver;
-    ZeroMemory(&ver, sizeof(ver));
-    ver.dwOSVersionInfoSize = sizeof(ver);
-    if (GetVersionEx((OSVERSIONINFO*)&ver)) {
-        const char *name = "Windows";
-        if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 0) name = "Windows Vista";
-        else if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 1) name = "Windows 7";
-        else if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 2) name = "Windows 8";
-        else if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 3) name = "Windows 8.1";
-        else if (ver.dwMajorVersion == 10 && ver.dwMinorVersion == 0) {
-            // Windows 10 y Windows 11 comparten 10.0, diferenciación real requiere otra API
-            // Aquí asumimos Windows 10/11
-            name = "Windows 10/11";
+    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
+    if (hMod) {
+        typedef LONG (WINAPI* RtlGetVersionPtr)(PRTL_OSVERSIONINFOW);
+        RtlGetVersionPtr fxPtr = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+        if (fxPtr != NULL) {
+            RTL_OSVERSIONINFOW rovi = {0};
+            rovi.dwOSVersionInfoSize = sizeof(rovi);
+            if (fxPtr(&rovi) == 0) {
+                const char *name = "Windows";
+                if (rovi.dwMajorVersion == 10 && rovi.dwMinorVersion == 0) {
+                    if (rovi.dwBuildNumber >= 22000) {
+                        name = "Windows 11";
+                    } else {
+                        name = "Windows 10";
+                    }
+                }
+                snprintf(info.sistema, sizeof(info.sistema),
+                         "%s (v%lu.%lu build %lu)",
+                         name, rovi.dwMajorVersion, rovi.dwMinorVersion, rovi.dwBuildNumber);
+            }
         }
-        snprintf(info.sistema, sizeof(info.sistema), "%s (v%lu.%lu)", 
-                 name, ver.dwMajorVersion, ver.dwMinorVersion);
-    } else {
-        strncpy(info.sistema, "Windows", sizeof(info.sistema)-1);
+    }
+
+    if (strlen(info.sistema) == 0) {
+        OSVERSIONINFOEX ver;
+        ZeroMemory(&ver, sizeof(ver));
+        ver.dwOSVersionInfoSize = sizeof(ver);
+        if (GetVersionEx((OSVERSIONINFO*)&ver)) {
+            const char *name = "Windows";
+            if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 0) name = "Windows Vista";
+            else if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 1) name = "Windows 7";
+            else if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 2) name = "Windows 8";
+            else if (ver.dwMajorVersion == 6 && ver.dwMinorVersion == 3) name = "Windows 8.1";
+            else if (ver.dwMajorVersion == 10 && ver.dwMinorVersion == 0) name = "Windows 10/11";
+
+            snprintf(info.sistema, sizeof(info.sistema),
+                     "%s (v%lu.%lu)", name, ver.dwMajorVersion, ver.dwMinorVersion);
+        } else {
+            strncpy(info.sistema, "Windows (versión desconocida)", sizeof(info.sistema)-1);
+        }
     }
 #endif
 
     return info;
 }
-

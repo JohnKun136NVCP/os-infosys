@@ -49,7 +49,7 @@ El realease de este proyecto se encuentra en (osinfosys Releases)[www.github.com
 
 ## Ejecutable (SHA256)
 
-Linux: ```b1946ac92492d2347c6235b4d2611184f37b5a2b9e6f8b3f8d6f4cf4e5f1e5f7  osinfosys-linux```
+Linux: ```9e23fb2848e47c94dd1f2730cabaeaccc2c27ef256643e0cdb8454ef2bd56bc6  osinfosys-linux```
 
 Windows: ```5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8  osinfosys-windows.exe```
 
